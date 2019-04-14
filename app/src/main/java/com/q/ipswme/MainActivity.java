@@ -63,9 +63,9 @@ public class MainActivity extends AppCompatActivity {
 
         NetworkUtil checkNetworkStatus = new NetworkUtil();
         if(checkNetworkStatus.isNetworkConnected(getApplicationContext())){
-            Toast.makeText(MainActivity.this, "网络连接成功", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getResources().getString(R.string.networkConnected), Toast.LENGTH_SHORT).show();
         }else{
-            Toast.makeText(MainActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this, getResources().getString(R.string.checkYourNetwork), Toast.LENGTH_SHORT).show();
         }
 
         devicesSpinner.setAdapter(devicesAdapter);
@@ -122,10 +122,12 @@ public class MainActivity extends AppCompatActivity {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("IPSWDownloadLink", IPSWDownloadLink);
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(MainActivity.this, "已复制下载链接", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, getResources().getString(R.string.linkCopyed), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
+
 
     public void httpGet(final String url) {
         new Thread() {

@@ -9,4 +9,7 @@
     <string name="MD5">MD5</string>
     <string name="SHA1">SHA1</string>
     <string name="copyLink">Copy Link</string>
+    <string name="networkConnected">Connected</string>
+    <string name="checkYourNetwork">Please check your network</string>
+    <string name="linkCopyed">Copyed</string>
 </resources>
