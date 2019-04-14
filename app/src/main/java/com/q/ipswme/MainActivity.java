@@ -59,6 +59,15 @@ public class MainActivity extends AppCompatActivity {
         devicesAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, devices);
         versionsAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, versions);
 
+        copyLink.setEnabled(false);
+
+        NetworkUtil checkNetworkStatus = new NetworkUtil();
+        if(checkNetworkStatus.isNetworkConnected(getApplicationContext())){
+            Toast.makeText(MainActivity.this, "网络连接成功", Toast.LENGTH_SHORT).show();
+        }else{
+            Toast.makeText(MainActivity.this, "网络连接失败", Toast.LENGTH_SHORT).show();
+        }
+
         devicesSpinner.setAdapter(devicesAdapter);
         versionsSpinner.setAdapter(versionsAdapter);
 
@@ -113,9 +122,39 @@ public class MainActivity extends AppCompatActivity {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
                 ClipData clip = ClipData.newPlainText("IPSWDownloadLink", IPSWDownloadLink);
                 clipboard.setPrimaryClip(clip);
-                Toast.makeText(MainActivity.this, "已复制下载链接", 2000).show();
+                Toast.makeText(MainActivity.this, "已复制下载链接", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    public void httpGet(final String url) {
+        new Thread() {
+            @Override
+            public void run() {
+                super.run();
+                OkHttpClient client = new OkHttpClient();//创建okhttp实例
+                Request request = new Request.Builder()
+                        .url(url).build();
+                Call call = client.newCall(request);
+                try {
+                    Response response = call.execute();
+                    if (response.isSuccessful()) {
+                        Message msg = Message.obtain();
+                        msg.obj = response.body().string();
+
+                        if (url.equals("https://api.ipsw.me/v4/devices")){
+                            devicesHandler.sendMessage(msg);
+                        }else if (url.startsWith("https://api.ipsw.me/v4/ipsw/")){
+                            detailHandler.sendMessage(msg);
+                        }else {
+                            versionsHandler.sendMessage(msg);
+                        }
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
 
     Handler devicesHandler = new Handler() {
@@ -206,34 +245,4 @@ public class MainActivity extends AppCompatActivity {
 
         }
     };
-
-    public void httpGet(final String url) {
-        new Thread() {
-            @Override
-            public void run() {
-                super.run();
-                OkHttpClient client = new OkHttpClient();//创建okhttp实例
-                Request request = new Request.Builder()
-                        .url(url).build();
-                Call call = client.newCall(request);
-                try {
-                    Response response = call.execute();
-                    if (response.isSuccessful()) {
-                        Message msg = Message.obtain();
-                        msg.obj = response.body().string();
-
-                        if (url == "https://api.ipsw.me/v4/devices"){
-                            devicesHandler.sendMessage(msg);
-                        }else if (url.startsWith("https://api.ipsw.me/v4/ipsw/")){
-                            detailHandler.sendMessage(msg);
-                        }else {
-                            versionsHandler.sendMessage(msg);
-                        }
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
 }

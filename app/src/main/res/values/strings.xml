@@ -1,12 +1,11 @@
 <resources>
     <string name="app_name">ipsw.me</string>
-    <string name="list_test">test</string>
     <string name="chooseDevices">请选择设备：</string>
     <string name="chooseVersion">请选择系统版本：</string>
     <string name="version">版本</string>
     <string name="ifSigned">签名状态</string>
     <string name="issueDate">发布日期</string>
     <string name="MD5">MD5</string>
-    <string name="SHA1">SHA1</string>
     <string name="copyLink">复制下载链接</string>
+    <string name="SHA1">SHA1</string>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">ipsw.me</string>
+    <string name="chooseDevices">Choose your device:</string>
+    <string name="chooseVersion">Choose IPSW version:</string>
+    <string name="version">Version</string>
+    <string name="ifSigned">Sign Status</string>
+    <string name="issueDate">Release Date</string>
+    <string name="MD5">MD5</string>
+    <string name="SHA1">SHA1</string>
+    <string name="copyLink">Copy Link</string>
+</resources>
