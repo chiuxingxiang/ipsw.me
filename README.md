@@ -1,1 +1,1 @@
-![Screenshot](/Screenshot.png)
+![Screenshot](/Screenshot_cn.png) ![Screenshot](/Screenshot_en.png)
